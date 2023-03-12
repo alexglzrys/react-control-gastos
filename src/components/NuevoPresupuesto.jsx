@@ -1,14 +1,19 @@
 import { useState } from "react";
+import { Mensaje } from "./Mensaje";
 
-export const NuevoPresupuesto = ({handleEstablecerPresupuesto}) => {
+export const NuevoPresupuesto = ({ handleEstablecerPresupuesto }) => {
   // Variables de estado para el control de formulario
   const [nuevoPresupuesto, setNuevoPresupuesto] = useState(0);
+  const [mensaje, setMensaje] = useState("");
 
   // Establecer el nuevo presupuesto en el estado global de la aplicacion
   const handleSubmit = (e) => {
     e.preventDefault();
     // Validar que el presupuesto sea válido
-    if (!Number(nuevoPresupuesto) || Number(nuevoPresupuesto) < 0) return
+    if (!Number(nuevoPresupuesto) || Number(nuevoPresupuesto) < 0) {
+      setMensaje("No es un presupuesto válido");
+      return;
+    }
 
     handleEstablecerPresupuesto(Number(nuevoPresupuesto));
   };
@@ -27,6 +32,7 @@ export const NuevoPresupuesto = ({handleEstablecerPresupuesto}) => {
           />
           <input type="submit" value="Añadir" />
         </div>
+        {mensaje && <Mensaje tipo="error">{mensaje}</Mensaje>}
       </form>
     </div>
   );
