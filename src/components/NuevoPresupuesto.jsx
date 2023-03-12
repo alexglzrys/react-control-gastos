@@ -28,7 +28,7 @@ export const NuevoPresupuesto = ({ handleEstablecerPresupuesto }) => {
             className="nuevo-presupuesto"
             placeholder="Añade tu Presupuesto"
             value={nuevoPresupuesto}
-            onChange={(e) => setNuevoPresupuesto(e.target.value)}
+            onChange={(e) => setNuevoPresupuesto(Number(e.target.value))}
           />
           <input type="submit" value="Añadir" />
         </div>

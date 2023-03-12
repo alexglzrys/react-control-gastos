@@ -1,10 +1,21 @@
-import { NuevoPresupuesto } from "./NuevoPresupuesto"
+import { ControlPresupuesto } from "./ControlPresupuesto";
+import { NuevoPresupuesto } from "./NuevoPresupuesto";
 
-export const Header = ({handleEstablecerPresupuesto, esPresupuestoValido}) => {
+export const Header = ({
+  handleEstablecerPresupuesto,
+  esPresupuestoValido,
+  presupuesto
+}) => {
   return (
     <header>
-        <h1>Planificador de Gastos</h1>
-        {esPresupuestoValido ? <p>Control de Presupuesto</p> : <NuevoPresupuesto handleEstablecerPresupuesto={handleEstablecerPresupuesto}/>}
+      <h1>Planificador de Gastos</h1>
+      {esPresupuestoValido ? (
+        <ControlPresupuesto presupuesto={presupuesto} />
+      ) : (
+        <NuevoPresupuesto
+          handleEstablecerPresupuesto={handleEstablecerPresupuesto}
+        />
+      )}
     </header>
-  )
-}
+  );
+};
