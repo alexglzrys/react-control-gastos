@@ -1,10 +1,10 @@
 import { NuevoPresupuesto } from "./NuevoPresupuesto"
 
-export const Header = () => {
+export const Header = ({handleEstablecerPresupuesto}) => {
   return (
     <header>
         <h1>Planificador de Gastos</h1>
-        <NuevoPresupuesto />
+        <NuevoPresupuesto handleEstablecerPresupuesto={handleEstablecerPresupuesto}/>
     </header>
   )
 }
