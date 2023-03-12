@@ -10,12 +10,12 @@ export const NuevoPresupuesto = ({ handleEstablecerPresupuesto }) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     // Validar que el presupuesto sea válido
-    if (!Number(nuevoPresupuesto) || Number(nuevoPresupuesto) < 0) {
+    if (!nuevoPresupuesto || nuevoPresupuesto <= 0) {
       setMensaje("No es un presupuesto válido");
       return;
     }
-
-    handleEstablecerPresupuesto(Number(nuevoPresupuesto));
+    setMensaje('')
+    handleEstablecerPresupuesto(nuevoPresupuesto);
   };
 
   return (
@@ -24,7 +24,7 @@ export const NuevoPresupuesto = ({ handleEstablecerPresupuesto }) => {
         <div className="campo">
           <label htmlFor="">Definir Presupuesto</label>
           <input
-            type="text"
+            type="number"
             className="nuevo-presupuesto"
             placeholder="Añade tu Presupuesto"
             value={nuevoPresupuesto}
