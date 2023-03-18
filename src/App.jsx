@@ -44,6 +44,7 @@ function App() {
         handleEstablecerPresupuesto={handleEstablecerPresupuesto}
         esPresupuestoValido={esPresupuestoValido}
         presupuesto={presupuesto}
+        gastos={gastos}
       />
       {/* Mostrar el icono de agregar nuevo gasto solo cuando el presupuesto sea válido */}
       {esPresupuestoValido && (
