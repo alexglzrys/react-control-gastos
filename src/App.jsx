@@ -9,6 +9,7 @@ function App() {
   const [esPresupuestoValido, setEsPresupuestoValido] = useState(false);
   const [modal, setModal] = useState(false);
   const [animarModal, setAnimarModal] = useState(false)
+  const [gasto, setGasto] = useState([])
 
   // Establecer el nuevo presupuesto en el estado global
   const handleEstablecerPresupuesto = (nuevo_presupuesto) => {
@@ -32,6 +33,10 @@ function App() {
     }, 500);
   }
 
+  const handleGuardarGasto = (nuevo_gasto) => {
+    setGasto([...gasto, nuevo_gasto])
+  }
+
   return (
     <div>
       <Header
@@ -50,7 +55,7 @@ function App() {
         </div>
       )}
       {/* Mostrar modal cunado se establece un nuevo gasto */}
-      {modal && <Modal handleCerrarModal={handleCerrarModal} animarModal={animarModal} />}
+      {modal && <Modal handleCerrarModal={handleCerrarModal} animarModal={animarModal} handleGuardarGasto={handleGuardarGasto} />}
     </div>
   );
 }
