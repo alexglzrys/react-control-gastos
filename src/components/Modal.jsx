@@ -29,7 +29,8 @@ export const Modal = ({ handleCerrarModal, animarModal, handleGuardarGasto }) =>
         id: generarId(), 
         nombre, 
         cantidad, 
-        categoria
+        categoria,
+        fecha: Date.now()
     })
     // Animar y cerrar modal
     handleCerrarModal()
