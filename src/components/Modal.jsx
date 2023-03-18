@@ -1,15 +1,31 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import CerrarModal from "../img/cerrar.svg";
 import { Mensaje } from "./Mensaje";
 import { generarId } from '../helpers'
 
-export const Modal = ({ handleCerrarModal, animarModal, handleGuardarGasto }) => {
+export const Modal = ({ handleCerrarModal, animarModal, handleGuardarGasto, editarGasto }) => {
   // Estado local del formulario de gastos
   const [nombre, setNombre] = useState("");
   const [cantidad, setCantidad] = useState("");
   const [categoria, setCategoria] = useState("");
 
+  // Estado complementario para gastos a editar
+  const [fecha, setFecha] = useState("")
+  const [id, setId] = useState("")
+
   const [mensaje, setMensaje] = useState("");
+
+  // Efecto secundario para detectar si el modal fue abierto para editar un gasto
+  useEffect(() => {
+    // Si el gasto a editar no viene vació, significa que se desa editar un gasto
+    if (Object.keys(editarGasto).length > 0) {
+      setNombre(editarGasto.nombre);
+      setCantidad(editarGasto.cantidad)
+      setCategoria(editarGasto.categoria)
+      setFecha(editarGasto.fecha)
+      setId(editarGasto.id)
+    }
+  }, [editarGasto])
 
   // Contraldor de envio de formulario
   const handleSubmit = (e) => {
@@ -24,14 +40,27 @@ export const Modal = ({ handleCerrarModal, animarModal, handleGuardarGasto }) =>
       return false;
     }
 
-    // Guardar el nuevo gasto
-    handleGuardarGasto({
+    // Verificar si se trata de un registro neuvo o una actualización
+    if (id) {
+      // actualización
+      handleGuardarGasto({
+        id,
+        nombre, 
+        cantidad, 
+        categoria,
+        fecha: Date.now()
+      }, 'edit')
+    } else {
+      // Guardar el nuevo gasto
+      handleGuardarGasto({
         id: generarId(), 
         nombre, 
         cantidad, 
         categoria,
         fecha: Date.now()
-    })
+      }, 'new')
+    }
+    
     // Animar y cerrar modal
     handleCerrarModal()
   };
@@ -46,7 +75,7 @@ export const Modal = ({ handleCerrarModal, animarModal, handleGuardarGasto }) =>
         onSubmit={handleSubmit}
         className={`formulario ${animarModal ? "animar" : "cerrar"}`}
       >
-        <legend>Nuevo Gasto</legend>
+        <legend>{editarGasto.nombre ? 'Editar Gasto' : 'Nuevo Gasto'}</legend>
         {mensaje && <Mensaje tipo="error">{mensaje}</Mensaje>}
         <div className="campo">
           <label htmlFor="nombre">Nombre Gasto</label>
@@ -87,7 +116,7 @@ export const Modal = ({ handleCerrarModal, animarModal, handleGuardarGasto }) =>
             <option value="suscripciones">Suscripciones</option>
           </select>
         </div>
-        <input type="submit" value="Añadir Gasto" />
+        <input type="submit" value={editarGasto.nombre ? 'Actualizar Cambios' : 'Añadir Gasto'} />
       </form>
     </div>
   );
