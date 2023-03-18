@@ -8,6 +8,7 @@ function App() {
   const [presupuesto, setPresupuesto] = useState(0);
   const [esPresupuestoValido, setEsPresupuestoValido] = useState(false);
   const [modal, setModal] = useState(false);
+  const [animarModal, setAnimarModal] = useState(false)
 
   // Establecer el nuevo presupuesto en el estado global
   const handleEstablecerPresupuesto = (nuevo_presupuesto) => {
@@ -17,10 +18,18 @@ function App() {
 
   const handleNuevoGasto = () => {
     setModal(true);
+    // Mostrar animación de CSS un segundo después sobre el formulario
+    setTimeout(() => {
+      setAnimarModal(true);
+    }, 500);
   };
 
   const handleCerrarModal = () => {
-    setModal(false);
+    // Primero muestro la animación en el fomrulario y después cierro el modal
+    setAnimarModal(false);
+    setTimeout(() => {
+      setModal(false);
+    }, 500);
   }
 
   return (
@@ -41,7 +50,7 @@ function App() {
         </div>
       )}
       {/* Mostrar modal cunado se establece un nuevo gasto */}
-      {modal && <Modal handleCerrarModal={handleCerrarModal} />}
+      {modal && <Modal handleCerrarModal={handleCerrarModal} animarModal={animarModal} />}
     </div>
   );
 }
