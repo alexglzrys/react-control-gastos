@@ -43,9 +43,9 @@ export const ControlPresupuesto = ({ presupuesto, gastos }) => {
           value={porcentaje}
           text={`${porcentaje}% Gastado`}
           styles={buildStyles({
-            pathColor: '#3b82f6', // color de barra
+            pathColor: disponible < 0 ? '#972424' : '#3b82f6', // color de barra
             trailColor: '#f5f5f5', // color del espacio vacio
-            textColor: '#3b82f6', // color del texto en gráfico
+            textColor: disponible < 0 ? '#972424' : '#3b82f6', // color del texto en gráfico
           })}
         />
       </div>
@@ -54,7 +54,8 @@ export const ControlPresupuesto = ({ presupuesto, gastos }) => {
           <span>Presupuesto: </span>
           {formatearMoneda(presupuesto)}
         </p>
-        <p>
+        {/* Mostrar una clase de css condicional para cambiar de color el texto cuando los gastos sean superiores al presupuesto */}
+        <p className={`${disponible < 0 ? 'negativo' : null}`}>
           <span>Disponible: </span>
           {formatearMoneda(disponible)}
         </p>
