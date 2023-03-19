@@ -3,7 +3,7 @@ import { CircularProgressbar, buildStyles } from "react-circular-progressbar";
 import "react-circular-progressbar/dist/styles.css";
 
 // Funciòn de utilidad para formatear monedas a peso mexicano
-export const ControlPresupuesto = ({ presupuesto, gastos }) => {
+export const ControlPresupuesto = ({ presupuesto, gastos, handleResetApp }) => {
   // Estado interno para conocer el dinero disponible y el dinero gastado
   const [disponible, setDisponible] = useState(0);
   const [gastado, setGastado] = useState(0);
@@ -50,6 +50,7 @@ export const ControlPresupuesto = ({ presupuesto, gastos }) => {
         />
       </div>
       <div className="contenido-presupuesto">
+        <button type="button" className="reset-app" onClick={handleResetApp}>Resetar Aplicacion</button>
         <p>
           <span>Presupuesto: </span>
           {formatearMoneda(presupuesto)}

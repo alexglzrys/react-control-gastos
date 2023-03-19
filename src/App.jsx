@@ -96,6 +96,15 @@ function App() {
     }
   }
 
+  // controlador para resetear informacion del App (nuevos presupuestos del mes)
+  const handleResetApp = () => {
+    if (window.confirm('¿Deseas resetar la información?')) {
+      setPresupuesto(0)
+      setEsPresupuestoValido(false)
+      setGastos([]);
+    }
+  }
+
   return (
     <div className={modal ? "fijar" : null}>
       <Header
@@ -103,6 +112,7 @@ function App() {
         esPresupuestoValido={esPresupuestoValido}
         presupuesto={presupuesto}
         gastos={gastos}
+        handleResetApp={handleResetApp}
       />
       {/* Mostrar el icono de agregar nuevo gasto solo cuando el presupuesto sea válido */}
       {esPresupuestoValido && (

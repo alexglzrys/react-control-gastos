@@ -5,13 +5,14 @@ export const Header = ({
   handleEstablecerPresupuesto,
   esPresupuestoValido,
   presupuesto,
-  gastos
+  gastos,
+  handleResetApp
 }) => {
   return (
     <header>
       <h1>Planificador de Gastos</h1>
       {esPresupuestoValido ? (
-        <ControlPresupuesto presupuesto={presupuesto} gastos={gastos} />
+        <ControlPresupuesto presupuesto={presupuesto} gastos={gastos} handleResetApp={handleResetApp} />
       ) : (
         <NuevoPresupuesto
           handleEstablecerPresupuesto={handleEstablecerPresupuesto}
