@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { Filtro } from "./components/Filtro";
 import { Header } from "./components/Header";
 import { ListadoGastos } from "./components/ListadoGastos";
 import { Modal } from "./components/Modal";
@@ -16,6 +17,10 @@ function App() {
   const [animarModal, setAnimarModal] = useState(false);
   const [gastos, setGastos] = useState(gastos_inicial);
   const [editarGasto, setEditarGasto] = useState({});
+
+  // estado para los filtros
+  const [filtro, setFiltro] = useState('')
+  const [gastosFiltrados, setGastosFiltrados] = useState([])
 
   // Efecto secubdario para detectar cambios en el presupuesto, y establecerlo en localStorage
   useEffect(() => {
@@ -79,6 +84,18 @@ function App() {
     setGastos(gastos_actualizados);
   }
 
+  // Si hay una categoría, entonces se seleccionó un filtro, caso contrario, se quiere ver todos los gastos
+  const handleFiltrarGastos = (categoria) => {
+    if (categoria) {
+      const gastos_filtrados = gastos.filter((gasto) => gasto.categoria === categoria);
+      setGastosFiltrados(gastos_filtrados)
+      setFiltro(categoria)
+    } else {
+      setGastosFiltrados([]);
+      setFiltro('');
+    }
+  }
+
   return (
     <div className={modal ? "fijar" : null}>
       <Header
@@ -91,8 +108,11 @@ function App() {
       {esPresupuestoValido && (
         <>
           <main>
+            <Filtro handleFiltrarGastos={handleFiltrarGastos} />
             <ListadoGastos
               gastos={gastos}
+              gastosFiltrados={gastosFiltrados}
+              filtro={filtro}
               handleEditarGasto={handleEditarGasto}
               handleEliminarGasto={handleEliminarGasto}
             />
