@@ -1,17 +1,34 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Header } from "./components/Header";
 import { ListadoGastos } from "./components/ListadoGastos";
 import { Modal } from "./components/Modal";
 import IconoNuevoGasto from "./img/nuevo-gasto.svg";
 
+// leer desde localStorage el presupuesto inicial
+const presupuesto_inicial = Number(localStorage.getItem('presupuesto') ?? 0);
+const gastos_inicial = JSON.parse(localStorage.getItem('gastos')) ?? [];
+
 function App() {
   // Estado global
-  const [presupuesto, setPresupuesto] = useState(0);
+  const [presupuesto, setPresupuesto] = useState(presupuesto_inicial);
   const [esPresupuestoValido, setEsPresupuestoValido] = useState(false);
   const [modal, setModal] = useState(false);
   const [animarModal, setAnimarModal] = useState(false);
-  const [gastos, setGastos] = useState([]);
+  const [gastos, setGastos] = useState(gastos_inicial);
   const [editarGasto, setEditarGasto] = useState({});
+
+  // Efecto secubdario para detectar cambios en el presupuesto, y establecerlo en localStorage
+  useEffect(() => {
+    localStorage.setItem('presupuesto', presupuesto);
+    if (presupuesto > 0) {
+      setEsPresupuestoValido(true)
+    }
+  }, [presupuesto])
+
+  // Efecto secundario para detectar cambios en los gastos registrados, y establecerlos en localStorage
+  useEffect(() => {
+    localStorage.setItem('gastos', JSON.stringify(gastos));
+  }, [gastos]);
 
   // Establecer el nuevo presupuesto en el estado global
   const handleEstablecerPresupuesto = (nuevo_presupuesto) => {
